@@ -1,0 +1,67 @@
+{% schema %} { "name": "Airtable", "target": "section" } {% endschema %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"defer="defer"></script> -->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"defer="defer"></script>
+<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"defer="defer"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css"defer="defer">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" defer="defer" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+    <style>
+        .dataTables_wrapper{
+            overflow-x: scroll;
+        }
+    </style>
+
+    <!--HTML table with lab report data-->
+    <table id="tableID" class="display" style="width: 100%;">
+        <thead>
+            <tr align="left">
+                <th>Manufacturing Date</th>
+                <th>Batch</th>
+                <th>Product</th>
+                <th>Protein Content</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr align="left">
+                <th>Manufacturing Date</th>
+                <th>Batch</th>
+                <th>Product</th>
+                <th>Protein Content</th>
+            </tr>
+        </tfoot>
+    </table>
+    <script defer="defer">
+        window.addEventListener('load', (event) => {
+            $('#tableID').DataTable( {
+        responsive: true,
+        autoWidth: false,
+    ajax: {
+        url: 'https://hklabreport.healthkart.com/view',
+        dataSrc: 'records'
+    },
+        "columns": [
+            { "data": "fields.Date_of_Manufacturing" },
+            { "data": "fields.Batch" },
+            { "data": "fields.Product" },
+            { "data": "fields.Protein_Content.url",
+            "render": function ( data, type, full, meta ) {
+      return '<a href="'+data+'">View Report</a>';
+    }
+}
+        ]
+    } );
+  console.log('page is fully loaded');
+});
+//         $(document).ready(function() {
+    
+// } );
+    </script>
+    
+</body>
+</html>
