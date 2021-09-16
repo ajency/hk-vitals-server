@@ -8,6 +8,8 @@ import next from "next";
 import Router from "koa-router";
 import axios from "axios";
 
+var cors = require('koa2-cors');
+
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = process.env.NODE_ENV !== "production";
@@ -121,6 +123,7 @@ app.prepare().then(async () => {
     }
   });
 
+  server.use(cors({origin: '*'}));
   server.use(router.allowedMethods());
   server.use(router.routes());
   server.listen(port, () => {
